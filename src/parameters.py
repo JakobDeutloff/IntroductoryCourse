@@ -1,18 +1,41 @@
-# %% Define Parameters and initial condition
-lamb = 1.75  # W/m^2 K
-lamb_star = 0.75  # W/m^2 K
-beta = 5.77  # W/m2
+#%%
+from src.helper_functions import seconds_to_year, year_to_seconds
+
+# Ocean ---------------------------------------------------------
+lamb = 1.75  # (W/m^2 K)
+lamb_star = 0.75  # (W/m^2 K)
+beta = 5.77  # (W/m^2)
 ratio = 2  # doubling of CO2
-c = 4000  # J/kg K
+c = 4000  # (J/kg K)
 rho = 1026  # ocean density (kg/m^3)
-D_s = 40  # surface ocean depth (m)
-D_d = 2580  # deep ocean depth (m)
+D = 2620  # Equivalent ocean depth (m)
 years = 500  # Years after which equilibrium should be reached
+delta = 0.015  # ratio of surface to deep ocean depth
+D_s = D * delta  # surface ocean depth (m)
+D_d = D * (1 - delta)  # deep ocean depth (m)
+c_s = D_s * c * rho  # heat capacity of surface ocean (J/K)
+c_d = D_d * c * rho  # heat capacity of deep ocean (J/K)
+eta_h = c_d / (year_to_seconds(years))  # mixing parameter (J/K/year)
 
-# %% Calculate heat capacity of upper and lower ocean
-c_s = D_s * c * rho  # J/K
-c_d = D_d * c * rho  # J/K
+# Carbon Cylce --------------------------------------------------
+k_a = 2.12  # Atmospheric carbon intensity factor (GtC/ppm)
+beta_pi = 0.4  # Ocean fertilization factor (unitless)
+gamma = 0.005 / year_to_seconds(1)  # Air sea gas exchange coefficient (GtC / year / ppm)
+zeta = 10.5  # Revelle factor (unitless)
+pi_zero = 60 / year_to_seconds(1)  # pre-industrial NPP (GtC/year)
+f = 1 / 7
+C_o_zero = 37e3  # pre-industrial oceanic carbon (GtC)
+C_l_zero = 2500  # pre-industrial land carbon (GtC)
+C_a_zero = C_o_zero / (zeta * ((1 - f) / f))  # per-industrial atmospheric carbon (GtC)
+C_d_zero = C_o_zero * ((delta / (1 - delta)) + 1)**(-1) # pre-industrial deep ocean carbon (GtC)
+C_s_zero =  C_o_zero - C_d_zero # pre-industrial surface ocean carbon (GtC)
+k_o = (k_a / zeta) * (C_s_zero / C_a_zero) # ocean carbon intensity factor (GtC/ppm)
+tau_1_zero = 41 * year_to_seconds(1)  # (seconds)
+chi = 1.8 # (unitless)
+t_opt = 250 * year_to_seconds(1)  # (seconds)
+A_tot = 5e3  # (GtC)
+my_zero = 5 / year_to_seconds(1)  # (m/year)
+eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/year)
 
-# %% Calculate eta
-eta_h = c_d / (years * 356 * 24 * 60 * 60)
+
 # %%
