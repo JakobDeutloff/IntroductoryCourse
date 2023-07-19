@@ -15,14 +15,14 @@ D_s = D * delta  # surface ocean depth (m)
 D_d = D * (1 - delta)  # deep ocean depth (m)
 c_s = D_s * c * rho  # heat capacity of surface ocean (J/K)
 c_d = D_d * c * rho  # heat capacity of deep ocean (J/K)
-eta_h = c_d / (year_to_seconds(years))  # mixing parameter (J/K/year)
+eta_h = c_d / (year_to_seconds(years))  # mixing parameter (J/K/second)
 
 # Carbon Cylce --------------------------------------------------
 k_a = 2.12  # Atmospheric carbon intensity factor (GtC/ppm)
 beta_pi = 0.4  # Ocean fertilization factor (unitless)
-gamma = 0.005 / year_to_seconds(1)  # Air sea gas exchange coefficient (GtC / year / ppm)
+gamma = 0.005 / year_to_seconds(1)  # Air sea gas exchange coefficient (GtC / second / ppm)
 zeta = 10.5  # Revelle factor (unitless)
-pi_zero = 60 / year_to_seconds(1)  # pre-industrial NPP (GtC/year)
+pi_zero = 60 / year_to_seconds(1)  # pre-industrial NPP (GtC/second)
 f = 1 / 7
 C_o_zero = 37e3  # pre-industrial oceanic carbon (GtC)
 C_l_zero = 2500  # pre-industrial land carbon (GtC)
@@ -34,8 +34,8 @@ tau_1_zero = 41 * year_to_seconds(1)  # (seconds)
 chi = 1.8 # (unitless)
 t_opt = 250 * year_to_seconds(1)  # (seconds)
 A_tot = 5e3  # (GtC)
-my_zero = 5 / year_to_seconds(1)  # (m/year)
-eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/year)
+my_zero = 5 / year_to_seconds(1)  # (m/second)
+eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/second)
 
 
 # %%
