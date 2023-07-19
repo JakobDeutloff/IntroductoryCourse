@@ -5,8 +5,7 @@ from src.models import two_layer_ocean_and_carbon_cylce
 from src.helper_functions import year_to_seconds, seconds_to_year
 import pickle
 import pandas as pd
-import matplotlib.pyplot as plt
-from src.parameters import initial_emissions
+
 
 # %% solve coupled  model
 budget = 2000  # Emission budget in GtC
@@ -43,7 +42,6 @@ for rate in rates:
     ds_coupled = run_model_with_rate(rate/year_to_seconds(1))
     results[str(rate.round())] = ds_coupled
     
-
-# %%
+# %% Save results
 pickle.dump(results, open("data/TCRE_results.pkl", "wb"))
-# %%
+
