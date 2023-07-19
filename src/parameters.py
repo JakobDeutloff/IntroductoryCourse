@@ -1,5 +1,6 @@
 #%%
-from src.helper_functions import seconds_to_year, year_to_seconds
+from src.helper_functions import seconds_to_year, year_to_seconds, co2tocarbon
+import numpy as np
 
 # Ocean ---------------------------------------------------------
 lamb = 1.75  # (W/m^2 K)
@@ -36,6 +37,10 @@ t_opt = 250 * year_to_seconds(1)  # (seconds)
 A_tot = 5e3  # (GtC)
 my_zero = 5 / year_to_seconds(1)  # (m/second)
 eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/second)
+
+# %% Emission rates 
+rate = 37.5  # Emissions in GtCO2/year
+initial_emissions = np.round(co2tocarbon(rate))/year_to_seconds(1)  # Emissions in GtC/second
 
 
 # %%

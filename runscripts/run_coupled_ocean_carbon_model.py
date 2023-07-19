@@ -7,7 +7,7 @@ import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# %% solve one layer  model
+# %% solve coupled  model
 t_end = year_to_seconds(3e3)  # simulation time in year
 
 result_coupled = solve_ivp(

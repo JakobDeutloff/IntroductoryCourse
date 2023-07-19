@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 result_coupled = pickle.load(open("data/result_coupled.pkl", "rb"))
 
 # %%
-fig, axes = plt.subplots(3, 2, figsize=(10, 10), sharex='col')
+fig, axes = plt.subplots(4, 2, figsize=(10, 10), sharex='col')
 
 result_coupled['T_s (K)'].plot(ax=axes[0, 0])
 axes[0, 0].set_title("T_s (K)")
@@ -20,9 +20,16 @@ result_coupled['C_s (GtC)'].plot(ax=axes[2, 0])
 axes[2, 0].set_title("C_s (GtC)")
 result_coupled['C_d (GtC)'].plot(ax=axes[2, 1])
 axes[2, 1].set_title("C_d (GtC)")
+axes[3, 0].plot(result_coupled['Emmissions (GtC)'])
+axes[3, 0].set_title("Emmissions (GtC)")
 
 for ax in axes.flatten():
     ax.grid()
 plt.show()
 
+# %% Plot T_s vs Emmisions
+
+fig, ax = plt.subplots()
+
+ax.plot(result_coupled['Emmissions (GtC)'], result_coupled['T_s (K)'])
 # %%

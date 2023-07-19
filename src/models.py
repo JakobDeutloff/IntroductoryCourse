@@ -21,13 +21,14 @@ def two_layer_ocean(t, y):
     return [dT_s, dT_d, imbalance_TOA]
 
 
-def two_layer_ocean_and_carbon_cylce(t, y):
+def two_layer_ocean_and_carbon_cylce(t, y, t_reverse=None, rate=None):
     T_s = y[0]
     T_d = y[1]
     C_a = y[2]
     C_l = y[3]
     C_s = y[4]
     C_d = y[5]
+    Cum_E = y[6]
 
     dT_s = (
         -(lamb / c_s) * T_s
@@ -48,12 +49,20 @@ def two_layer_ocean_and_carbon_cylce(t, y):
 
     dC_d = eta_c * ((C_s / delta) - (C_d / (1 - delta)))
 
-    A = (
-        A_tot
-        * ((2.5 / year_to_seconds(50)) * np.exp((t_opt - t) / year_to_seconds(50)))
-        / (1 + 2.5 * np.exp((t_opt - t) / year_to_seconds(50))) ** 2
+    # Calculate emissions
+    if t_reverse is None:
+        A = (
+            A_tot
+            * ((2.5 / year_to_seconds(50)) * np.exp((t_opt - t) / year_to_seconds(50)))
+            / (1 + 2.5 * np.exp((t_opt - t) / year_to_seconds(50))) ** 2
     )
+    elif t < t_reverse:
+        A = rate
+    elif (t >= t_reverse) & (Cum_E > 0):
+        A = -rate
+    else:
+        A = 0
 
     dC_a = A - dC_l - dC_s - dC_d
 
-    return [dT_s, dT_d, dC_a, dC_l, dC_s, dC_d]
+    return [dT_s, dT_d, dC_a, dC_l, dC_s, dC_d, A]
