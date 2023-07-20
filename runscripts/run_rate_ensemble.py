@@ -43,5 +43,7 @@ for rate in rates:
     results[str(rate.round())] = ds_coupled
     
 # %% Save results
-pickle.dump(results, open("data/TCRE_results.pkl", "wb"))
+pickle.dump(results, open("data/TCRE_results_doc_disabled.pkl", "wb"))
 
+
+# %%

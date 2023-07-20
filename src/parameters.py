@@ -34,7 +34,7 @@ k_o = (k_a / zeta) * (C_s_zero / C_a_zero) # ocean carbon intensity factor (GtC/
 tau_1_zero = 41 * year_to_seconds(1)  # (seconds)
 chi = 1.8 # (unitless)
 t_opt = 250 * year_to_seconds(1)  # (seconds)
-A_tot = 5e3  # (GtC)
+A_tot = 2.5e3 # SSP585: 5e3  # (GtC)
 my_zero = 5 / year_to_seconds(1)  # (m/second)
 eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/second)
 
@@ -42,5 +42,9 @@ eta_c = my_zero / D # Surface-deep ocean carbon exchange coefficient (1/second)
 rate = 37.5  # Emissions in GtCO2/year
 initial_emissions = np.round(co2tocarbon(rate))/year_to_seconds(1)  # Emissions in GtC/second
 
-
-# %%
+# %% Land management
+C_a_ideal = 1000  # Ideal atmospheric carbon (GtC)
+tau_reaction = year_to_seconds(10)  # timescale of land management (seconds) 
+tau_biomass = year_to_seconds(200)  # Biomass lifetime (seconds) 
+T_goal = 2  # Target temperature (K)
+T_to_C = 500  # Conversion factor from temperature to carbon (GtC/K)
