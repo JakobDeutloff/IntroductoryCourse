@@ -43,8 +43,8 @@ def plot_T_vs_E(results):
             color=colors[i],
             label=str(rate) + " (GtC/Year)",
         )
-        axes.set_ylabel("Ocean Surface Temperature (K)")
-        axes.set_xlabel("Cumulative Emmissions (GtC)")
+        axes.set_ylabel("Ocean Surface Temperature /K")
+        axes.set_xlabel("Cumulative Emmissions /GtC")
     handles, labels = axes.get_legend_handles_labels()
     fig.subplots_adjust(bottom=0.2)
     fig.legend(handles, labels, loc="lower center", ncols=5)
@@ -64,13 +64,13 @@ def plot_carbon(results, results_uncoupled=None):
     fig, axes = plt.subplots(2, 2, figsize=(10, 10), sharex="col")
 
     axes[0, 0].plot(results["10"]["C_a (GtC)"], color="k", label="Coupled")
-    axes[0, 0].set_ylabel("Atmospheric Carbon (GtC)")
+    axes[0, 0].set_ylabel("Atmospheric Carbon /GtC")
     axes[0, 1].plot(results["10"]["C_l (GtC)"], color="k", label="Coupled")
-    axes[0, 1].set_ylabel("Land Carbon (GtC)")
+    axes[0, 1].set_ylabel("Land Carbon /GtC")
     axes[1, 0].plot(results["10"]["C_s (GtC)"], color="k", label="Coupled")
-    axes[1, 0].set_ylabel("Surface Ocean Carbon (GtC)")
+    axes[1, 0].set_ylabel("Surface Ocean Carbon /GtC")
     axes[1, 1].plot(results["10"]["C_d (GtC)"], color="k", label="Coupled")
-    axes[1, 1].set_ylabel("Deep Ocean Carbon (GtC)")
+    axes[1, 1].set_ylabel("Deep Ocean Carbon /GtC")
 
     if results_uncoupled is not None:
         axes[0, 0].plot(
@@ -113,8 +113,8 @@ ax.plot(
 )
 
 ax.legend()
-ax.set_ylabel("Ocean Surface Temperature (K)")
-ax.set_xlabel("Cumulative Emmissions (GtC)")
+ax.set_ylabel("Ocean Surface Temperature /K")
+ax.set_xlabel("Cumulative Emmissions /GtC")
 ax.grid()
 fig.savefig("plots/rates_ensemble_T_vs_E_uncoupled_10.png")
 
@@ -135,8 +135,8 @@ ax.plot(
     label="5 GtC/Year",
 )
 ax.legend()
-ax.set_ylabel("Ocean Surface Temperature (K)")
-ax.set_xlabel("Cumulative Emmissions (GtC)")
+ax.set_ylabel("Ocean Surface Temperature /K")
+ax.set_xlabel("Cumulative Emmissions /GtC")
 ax.grid()
 fig.savefig("plots/rates_ensemble_T_vs_E_uncoupled_10_5.png")
 
@@ -146,13 +146,18 @@ fig, ax = plt.subplots(figsize=(7, 7))
 
 
 ax.plot(results_uncoupled["10"]['T_d (K)'], color='r', label='Deep Ocean 10 GtC/Year')
-ax.plot(results_uncoupled["5"]['T_d (K)'], color='r', label='Deep Ocean 5 GtC/Year', linestyle='--')
-ax.plot(results_uncoupled["10"]['T_s (K)'], color='b', linestyle='-', label='Surface Ocean GtC/Year')
-ax.plot(results_uncoupled["5"]['T_s (K)'], color='b', linestyle='--', label='Surface Ocean GtC/Year')
+ax.plot(results_uncoupled["5"]['T_d (K)'], color='b', label='Deep Ocean 5 GtC/Year', linestyle='-')
+ax.plot(results_uncoupled["10"]['T_s (K)'], color='r', linestyle='--', label='Surface Ocean 10 GtC/Year')
+ax.plot(results_uncoupled["5"]['T_s (K)'], color='b', linestyle='--', label='Surface Ocean 5 GtC/Year')
 ax.legend()
-ax.set_ylabel("Temperature (K)", color='r')
-ax.set_xlabel("Time (years)")
+ax.set_ylabel("Temperature /K", color='k')
+ax.set_xlabel("Time /years")
 ax.grid()
 fig.savefig("plots/rates_ensemble_T_d_uncoupled_10_5.png")
 
 # %% 
+
+fig, ax = plt.subplots(figsize=(7, 7))
+ax.plot(results_uncoupled["5"]['T_s (K)'] - results_uncoupled['5']['T_d (K)'], color='r', label='Surface Ocean 10 GtC/Year')
+
+# %%

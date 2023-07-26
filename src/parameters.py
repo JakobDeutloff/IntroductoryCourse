@@ -44,7 +44,7 @@ initial_emissions = np.round(co2tocarbon(rate))/year_to_seconds(1)  # Emissions 
 
 # %% Land management
 C_a_ideal = 1000  # Ideal atmospheric carbon (GtC)
-tau_reaction = year_to_seconds(10)  # timescale of land management (seconds) 
+tau_reaction = year_to_seconds(5)  # timescale of land management (seconds) 
 tau_biomass = year_to_seconds(200)  # Biomass lifetime (seconds) 
 T_goal = 2  # Target temperature (K)
 T_to_C = 500  # Conversion factor from temperature to carbon (GtC/K)

@@ -14,7 +14,8 @@ result = solve_ivp(
     t_span=[0, t_end],
     y0=[0, 0, 0, 0, 0, 0, 0, 0],
     method="RK45",
-    args=(True,),
+    args=(True, False),
+    t_eval=np.arange(0, t_end, year_to_seconds(1)),
 )
 
 # Construct Dataframe
@@ -42,7 +43,8 @@ result = solve_ivp(
     t_span=[0, t_end],
     y0=[0, 0, 0, 0, 0, 0, 0, 0],
     method="RK45",
-    args=(False,),
+    args=(False, False),
+    t_eval=np.arange(0, t_end, year_to_seconds(1)),
 )
 
 # Construct Dataframe
@@ -62,3 +64,37 @@ ds_no_land_management = pd.DataFrame(
 )
 ds_no_land_management.index.name = "time (years)"
 pickle.dump(ds_no_land_management, open("data/no_land_management.pkl", "wb"))
+
+# %% run pulse experiment
+
+result_pulse_and_reduction = solve_ivp(
+    model_with_landmanagement,
+    t_span=[0, year_to_seconds(4000)],
+    y0=[0, 0, 0, 0, 0, 0, 0, 0],
+    method="RK45",
+    args=(False, 1000),
+    t_eval=np.arange(0, t_end, year_to_seconds(1)),
+)
+
+# Construct Dataframe
+ds_pulse_and_reduction = pd.DataFrame(
+    index=seconds_to_year(result_pulse_and_reduction.t),
+    data=result_pulse_and_reduction.y.T,
+    columns=[
+        "T_s (K)",
+        "T_d (K)",
+        "C_a (GtC)",
+        "C_l (GtC)",
+        "C_s (GtC)",
+        "C_d (GtC)",
+        "Emmissions (GtC)",
+        "C_m (GtC)",
+    ],
+)
+ds_pulse_and_reduction.index.name = "time (years)"
+pickle.dump(ds_pulse_and_reduction, open("data/reduction_1000.pkl", "wb"))
+
+
+# %%
+fig = plot_all_outputs(ds_pulse_and_reduction)
+# %%
